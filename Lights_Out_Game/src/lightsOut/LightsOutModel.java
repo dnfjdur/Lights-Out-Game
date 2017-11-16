@@ -63,7 +63,14 @@ public class LightsOutModel
 
     public int move (int row, int col)
     {
-        if (row == 0)
+        lightSwitch(row, col);
+        lightSwitch(row, col - 1);
+        lightSwitch(row - 1, col);
+        lightSwitch(row, col + 1);
+        lightSwitch(row + 1, col);
+        return checkLightsOut(boardLayout) ? 1 : 0;
+
+        /*if (row == 0)
         {
             if (col == 0)
             {
@@ -137,7 +144,7 @@ public class LightsOutModel
             lightSwitch(row, col + 1);
             lightSwitch(row + 1, col);
             return checkLightsOut(boardLayout) ? 1 : 0;
-        }
+        }*/
     }
 
     /**
@@ -148,18 +155,23 @@ public class LightsOutModel
      */
     public void lightSwitch (int row, int col)
     {
-        if (boardLayout[row][col] == 0)
+        if ((row >= 0 && col >= 0) && (row <= boardLayout.length - 1 && col <= boardLayout[row].length - 1))
         {
-            boardLayout[row][col] = 1;
-        }
-        else if (boardLayout[row][col] == 1)
-        {
-            boardLayout[row][col] = 0;
+
+            if (boardLayout[row][col] == 0)
+            {
+                boardLayout[row][col] = 1;
+            }
+            else if (boardLayout[row][col] == 1)
+            {
+                boardLayout[row][col] = 0;
+            }
         }
     }
 
     /**
      * Checks whether or not all the lights are turned off on the board, if true increments winCount by 1.
+     * 
      * @param A
      * @return
      */
@@ -177,7 +189,7 @@ public class LightsOutModel
                 {
                     return false;
                 }
-                //System.out.println();
+                // System.out.println();
             }
         }
         winCount++;
