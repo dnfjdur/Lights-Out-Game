@@ -6,6 +6,8 @@ public class LightsOutModel
 {
     /** Provides the rows and col layout of the board */
     private int[][] boardLayout;
+    
+    private int[][] recordBoard;
 
     /** Counts how many games have been won */
     private int winCount;
@@ -23,6 +25,7 @@ public class LightsOutModel
         }
 
         boardLayout = new int[rows][cols];
+        recordBoard = new int [rows][cols];
     }
 
     /**
@@ -33,16 +36,16 @@ public class LightsOutModel
     public void newGame ()
     {
         // Turns all the lights on the board off
-
         Random rand = new Random();
         for (int i = 0; i < boardLayout.length; i++)
         {
             for (int x = 0; x < boardLayout[i].length; x++)
             {
                 boardLayout[i][x] = 1;
+                recordBoard[i][x] = 0;
             }
         }
-        
+
         // Uses Random to randomly make a move
         for (int i = 0; i < boardLayout.length; i++)
         {
@@ -51,6 +54,7 @@ public class LightsOutModel
                 if (rand.nextInt(2) == 0)
                 {
                     move(i, x);
+                    recordBoard[i][x] = 1;
                 }
             }
         }
@@ -69,7 +73,8 @@ public class LightsOutModel
         lightSwitch(row - 1, col); // bottom
         lightSwitch(row, col + 1); // right
         lightSwitch(row + 1, col); // top
-        return checkLightsOut(boardLayout) ? 1 : 0; // After each move, check if all the lights on the board are turned "off."
+        return checkLightsOut(boardLayout) ? 1 : 0; // After each move, check if all the lights on the board are turned
+                                                    // "off."
     }
 
     /**
@@ -120,6 +125,19 @@ public class LightsOutModel
         {
             int occupant = boardLayout[row][col];
             return (occupant % 2);
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            throw new IllegalArgumentException();
+        }
+    }
+    
+    public int playBack (int row, int col)
+    {
+        try
+        {
+            int step = recordBoard[row][col];
+            return (step%2);
         }
         catch (ArrayIndexOutOfBoundsException e)
         {

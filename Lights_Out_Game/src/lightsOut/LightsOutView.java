@@ -56,17 +56,40 @@ public class LightsOutView extends JFrame implements ActionListener
         root.add(board, "Center");
 
         // The top portion contains the score
-        JPanel winCount = new JPanel();
-        winCount.setLayout(new BorderLayout());
-        root.add(winCount, "North");
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
 
-        // Score board
-        JPanel scoreBoard = new JPanel();
-        // tiePanel.setBackground(BACKGROUND_COLOR);
+        JPanel winCount = new JPanel();
         wins = new JLabel("Wins: 0");
         wins.setFont(new Font("SansSerif", Font.BOLD, FONT_SIZE));
-        scoreBoard.add(wins);
-        winCount.add(scoreBoard, "Center");
+        winCount.add(wins);
+        topPanel.add(winCount, "West");
+
+        JPanel sPanel = new JPanel();
+        JButton solveIt = new JButton("Solve it");
+        solveIt.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                board.showSteps();
+            }
+        });
+        solveIt.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseEntered (MouseEvent e)
+            {
+                ToolTipManager.sharedInstance().setInitialDelay(0);
+                solveIt.setToolTipText(
+                        "At this time the button can only be used to solve computer generated games. Solving games in manual mode will come later.");
+            }
+        });
+
+        sPanel.add(solveIt);
+        topPanel.add(sPanel, "East");
+
+        root.add(topPanel, "North");
 
         // The bottom portion contains the New Game and Manual mode buttons
         JPanel buttons = new JPanel();
@@ -76,7 +99,7 @@ public class LightsOutView extends JFrame implements ActionListener
         JButton newGame = new JButton("New Game");
         JButton manual = new JButton("Enter Manual Mode");
         model.newGame();
-        
+
         newGame.addActionListener(new ActionListener()
         {
             /**
@@ -92,8 +115,6 @@ public class LightsOutView extends JFrame implements ActionListener
                 board.refresh();
             }
         });
-        // newGame.setForeground(TIE_COLOR);
-        // newGame.setBackground(BACKGROUND_COLOR);
         manual.addActionListener(new ActionListener()
         {
             /**
@@ -119,7 +140,7 @@ public class LightsOutView extends JFrame implements ActionListener
         });
         newGame.setFont(new Font("SansSerif", Font.BOLD, FONT_SIZE));
         manual.setFont(new Font("SansSerif", Font.BOLD, FONT_SIZE));
-        buttons.add(newGame);  
+        buttons.add(newGame);
         buttons.add(manual);
         root.add(buttons, "South");
 
@@ -207,6 +228,28 @@ class Board extends JPanel implements MouseListener
         display.setWins(model.getWins());
 
         // Ask that this board be repainted
+        repaint();
+    }
+
+    /**
+     * Displays the steps needed to solve the current game
+     */
+    public void showSteps ()
+    {
+        // Iterate through all of the squares that make up the grid
+        Component[] squares = getComponents();
+        for (Component c : squares)
+        {
+            Square s = (Square) c;
+
+            int status = model.playBack(s.getRow(), s.getCol());
+            if (status == 1)
+            {
+                s.setColor(Color.RED);
+            }
+        }
+
+        display.setWins(model.getWins());
         repaint();
     }
 

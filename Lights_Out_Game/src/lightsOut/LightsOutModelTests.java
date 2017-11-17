@@ -96,6 +96,7 @@ public class LightsOutModelTests
 
         test = new LightsOutModel(5, 5);
         assertEquals(0, test.getWins());
+        
         blankWin();
         assertEquals(1, test.getWins());
         
