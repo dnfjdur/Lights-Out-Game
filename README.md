@@ -4,7 +4,7 @@ Created for CS1410 By Oliver Yu
 
 This is a java implementation of the classic game called Lights Out. The goal is to turn off all the lights. Once you click on a light to turn it on or off, the lights to the top, bottom, left and right are also switched from their states. 
 
-##How to play the game
+## How to play the game
 
 Download the executable jar file located in Lights-Out-Game/LightsOut.jar
 
@@ -12,7 +12,7 @@ Once a game is won or user decides to start with a new randomly generated board,
 
 To setup your a custom board simply click on Enter Manual Mode and create your own board. There are no rules for this mode, that means when you click on one square, the squares around it will not change unless you click on them. Click Exit Manual Mode to play the custom game.
 
-##Running Tests
+## Running Tests
 
 A JUnit test class is incluced in the source code under src/LightsOutModelTests. Currently, the tests validate whether or not the methods that make up the "brains" of the game located in LightsOutModel work properly.
 
@@ -24,12 +24,12 @@ constructorTest tests whether or exceptions are thrown when a user tries to crea
 testLightSwitch tests the lightSwtich and the getOccupant methods
 testMove tests lightSwitch, getOccupant, move and getWins methods. Uses the helper methods mentioned above
 
-##Built With
+## Built With
 
 Java
 
 
-##Authors:
+## Authors:
 
 Oliver Yu
 Assignment idea from Joe Zachary for CS 1410
