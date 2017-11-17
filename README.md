@@ -8,7 +8,7 @@ This is a java implementation of the classic game called Lights Out. The goal is
 
 Download the executable jar file located in Lights-Out-Game/LightsOut.jar
 
-Once a game is won or user decides to start with a new randomly generated board, just click New Game
+Once a game is won or user decides to start with a new randomly generated board, click New Game.
 
 To setup your a custom board simply click on Enter Manual Mode and create your own board. There are no rules for this mode, that means when you click on one square, the squares around it will not change unless you click on them. Click Exit Manual Mode to play the custom game.
 
