@@ -32,7 +32,9 @@ public class LightsOutModel
      */
     public void newGame ()
     {
-        // Turns lights off
+        // Turns all the lights on the board off
+
+        Random rand = new Random();
         for (int i = 0; i < boardLayout.length; i++)
         {
             for (int x = 0; x < boardLayout[i].length; x++)
@@ -40,9 +42,8 @@ public class LightsOutModel
                 boardLayout[i][x] = 1;
             }
         }
-
-        // Basically a random move generator
-        Random rand = new Random();
+        
+        // Uses Random to randomly make a move
         for (int i = 0; i < boardLayout.length; i++)
         {
             for (int x = 0; x < boardLayout[i].length; x++)
@@ -56,99 +57,25 @@ public class LightsOutModel
     }
 
     /**
-     * Records a move made by the player. First method checks for corner cases where only 3 squares are switch on or
-     * off. Then checks for edge cases where 4 squares are switched. Finally any other move results in 5 squares being
-     * switched
+     * Records a move made by the player. A single "move" switches maximum of 5 squares. The top, bottom, left and right
+     * and the square that was clicked on. However if the square that was clicked on was a corner or edge, only 3 or 4
+     * squares will be switched respectively.
      */
 
     public int move (int row, int col)
     {
-        lightSwitch(row, col);
-        lightSwitch(row, col - 1);
-        lightSwitch(row - 1, col);
-        lightSwitch(row, col + 1);
-        lightSwitch(row + 1, col);
-        return checkLightsOut(boardLayout) ? 1 : 0;
-
-        /*if (row == 0)
-        {
-            if (col == 0)
-            {
-                lightSwitch(row, col);
-                lightSwitch(row + 1, col);
-                lightSwitch(row, col + 1);
-                return checkLightsOut(boardLayout) ? 1 : 0;
-            }
-            else if (col == boardLayout[row].length - 1)
-            {
-                lightSwitch(row, boardLayout[row].length - 1);
-                lightSwitch(row, boardLayout[row].length - 2);
-                lightSwitch(row + 1, boardLayout[row].length - 1);
-                return checkLightsOut(boardLayout) ? 1 : 0;
-            }
-            else
-            {
-                lightSwitch(row, col);
-                lightSwitch(row, col - 1);
-                lightSwitch(row + 1, col);
-                lightSwitch(row, col + 1);
-                return checkLightsOut(boardLayout) ? 1 : 0;
-            }
-        }
-        else if (row == boardLayout.length - 1)
-        {
-            if (col == 0)
-            {
-                lightSwitch(row, col);
-                lightSwitch(row - 1, col);
-                lightSwitch(row, col + 1);
-                return checkLightsOut(boardLayout) ? 1 : 0;
-            }
-            else if (col == boardLayout[row].length - 1)
-            {
-                lightSwitch(row, col);
-                lightSwitch(row, col - 1);
-                lightSwitch(row - 1, col);
-                return checkLightsOut(boardLayout) ? 1 : 0;
-            }
-            else
-            {
-                lightSwitch(row, col);
-                lightSwitch(row, col - 1);
-                lightSwitch(row - 1, col);
-                lightSwitch(row, col + 1);
-                return checkLightsOut(boardLayout) ? 1 : 0;
-            }
-        }
-        else if (col == 0)
-        {
-            lightSwitch(row, col);
-            lightSwitch(row - 1, col);
-            lightSwitch(row, col + 1);
-            lightSwitch(row + 1, col);//
-            return checkLightsOut(boardLayout) ? 1 : 0;
-        }
-        else if (col == boardLayout[row].length - 1)
-        {
-            lightSwitch(row, col);
-            lightSwitch(row - 1, col);
-            lightSwitch(row, col - 1);
-            lightSwitch(row + 1, col);
-            return checkLightsOut(boardLayout) ? 1 : 0;
-        }
-        else
-        {
-            lightSwitch(row, col);
-            lightSwitch(row, col - 1);
-            lightSwitch(row - 1, col);
-            lightSwitch(row, col + 1);
-            lightSwitch(row + 1, col);
-            return checkLightsOut(boardLayout) ? 1 : 0;
-        }*/
+        lightSwitch(row, col); // center
+        lightSwitch(row, col - 1); // left
+        lightSwitch(row - 1, col); // bottom
+        lightSwitch(row, col + 1); // right
+        lightSwitch(row + 1, col); // top
+        return checkLightsOut(boardLayout) ? 1 : 0; // After each move, check if all the lights on the board are turned "off."
     }
 
     /**
-     * Checks the switch state of the square and turns it on or off
+     * Checks the switch state of the square and turns it on or off. The method itself doens't know if the square
+     * clicked on is a edge corner or normal square. This method simply determines if squares to the top, left, bottom,
+     * and right exist.
      * 
      * @param row
      * @param col
@@ -157,15 +84,7 @@ public class LightsOutModel
     {
         if ((row >= 0 && col >= 0) && (row <= boardLayout.length - 1 && col <= boardLayout[row].length - 1))
         {
-
-            if (boardLayout[row][col] == 0)
-            {
-                boardLayout[row][col] = 1;
-            }
-            else if (boardLayout[row][col] == 1)
-            {
-                boardLayout[row][col] = 0;
-            }
+            boardLayout[row][col]++; // Increments the value stored at boardLayout by 1.
         }
     }
 
@@ -181,15 +100,10 @@ public class LightsOutModel
         {
             for (int j = 0; j < A[i].length; j++)
             {
-                /*
-                 * for (int[] x : A) { for (int y : x) { System.out.print(y + " "); } System.out.println(); }
-                 * System.out.println();
-                 */
-                if (A[i][j] != 1)
+                if ((A[i][j]) % 2 != 1)
                 {
                     return false;
                 }
-                // System.out.println();
             }
         }
         winCount++;
@@ -205,7 +119,7 @@ public class LightsOutModel
         try
         {
             int occupant = boardLayout[row][col];
-            return occupant;
+            return (occupant % 2);
         }
         catch (ArrayIndexOutOfBoundsException e)
         {
