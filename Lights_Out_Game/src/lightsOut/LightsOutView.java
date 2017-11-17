@@ -61,12 +61,12 @@ public class LightsOutView extends JFrame implements ActionListener
         root.add(winCount, "North");
 
         // Score board
-        JPanel tiePanel = new JPanel();
+        JPanel scoreBoard = new JPanel();
         // tiePanel.setBackground(BACKGROUND_COLOR);
         wins = new JLabel("Wins: 0");
         wins.setFont(new Font("SansSerif", Font.BOLD, FONT_SIZE));
-        tiePanel.add(wins);
-        winCount.add(tiePanel, "Center");
+        scoreBoard.add(wins);
+        winCount.add(scoreBoard, "Center");
 
         // The bottom portion contains the New Game and Manual mode buttons
         JPanel buttons = new JPanel();
