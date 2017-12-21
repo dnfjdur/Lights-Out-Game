@@ -32,4 +32,4 @@ Java
 ## Authors:
 
 Oliver Yu
-Assignment idea from Joe Zachary for CS 1410
+Assignment from Joe Zachary for CS 1410
